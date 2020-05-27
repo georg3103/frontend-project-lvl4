@@ -21,6 +21,9 @@
     "type": "git",
     "url": "git@github.com:hexlet-components/projects-frontend-l4-server.git"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "author": "Kirill Mokevnin",
   "license": "ISC",
   "homepage": "",

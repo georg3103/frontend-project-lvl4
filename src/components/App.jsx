@@ -5,14 +5,12 @@ import {
 } from 'react-router-dom';
 import Layout from './Layout';
 
-const App = () => {
-	return (
-		<Router>
-			<Route path="/">
-				<Layout/>
-			</Route>
-		</Router>
-	)
-};
+const App = () => (
+  <Router>
+    <Route path="/">
+      <Layout />
+    </Route>
+  </Router>
+);
 
 export default App;

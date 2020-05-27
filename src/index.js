@@ -6,27 +6,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import gon from 'gon';
 import App from './components/App';
 import slices from './redux';
 import '../assets/application.scss';
-import gon from 'gon';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-console.log('gon', gon);
-
 const store = configureStore({
   reducer: slices,
-  preloadedState: {...gon}
+  preloadedState: { ...gon },
 });
-
-console.log('store redux', store)
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <App />
   </Provider>,
-  document.querySelector('#chat')
+  document.querySelector('#chat'),
 );
