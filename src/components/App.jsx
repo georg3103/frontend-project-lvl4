@@ -1,25 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import Layout from './Layout';
 
-const App = ({ store }) => {
-	console.log('store', store);
-	const { channels } = store;
+const App = () => {
 	return (
-		<>
-			<h2>Channels</h2>
-			{
-				channels.map(({id, name}) => <div key={id}>{name}</div>)
-			}
-		</>
+		<Router>
+			<Route path="/">
+				<Layout/>
+			</Route>
+		</Router>
 	)
-};
-
-App.propTypes = {
-  store: PropTypes.shape({
-    channels: PropTypes.array.isRequired,
-    messages: PropTypes.array.isRequired,
-    currentChannelId: PropTypes.number.isRequired,
-  }).isRequired,
 };
 
 export default App;
