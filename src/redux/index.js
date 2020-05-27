@@ -19,7 +19,7 @@ const actions = {
 
 const selectors = {
   channels: getChannels,
-  currentChannel: getCurrentChannelId,
+  currentChannelId: getCurrentChannelId,
   messages: getMessages,
   messagesForChannel: getMessagesForChannel,
 };

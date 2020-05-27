@@ -1,17 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { getSelector } from '../redux';
 import connect from '../connect';
 import PropTypes from 'prop-types';
+
+import ChannelGroup from './ChannelGroup';
 
 const Layout = ({
   addChannel,
 }) => {
-	console.log('addChannel', addChannel);
-	const channels = useSelector(getSelector('channels'))
-	console.log('channels', channels);
 	return (
-		<h1>Layout</h1>
+		<div className="container h-100">
+			<div className="row h-100 border">
+				<div className="col-sm-4 border-right">
+					<ChannelGroup/>
+				</div>
+				<div className="col-sm-8">col-sm-8</div>
+			</div>
+		</div>
 	)
 };
 
