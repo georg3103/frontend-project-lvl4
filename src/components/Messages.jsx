@@ -6,9 +6,10 @@ import connect from '../connect';
 const Messages = () => {
   const currentChannelId = useSelector(getSelector('currentChannelId'));
   const messages = useSelector((state) => getSelector('messagesForChannel')(state, currentChannelId));
+  console.log('messages', messages);
   return (
     <>
-      {messages.map(({ id, name }) => <div key={id}>{name}</div>)}
+      {messages.map(({ id, message }) => <div key={id}>{message}</div>)}
     </>
   );
 };
