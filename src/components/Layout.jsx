@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import connect from '../connect';
 
 import ChannelGroup from './ChannelGroup';
+import Messages from './Messages';
+import MessageForm from './MessageForm';
 
 const Layout = ({
   // eslint-disable-next-line no-unused-vars
@@ -13,7 +15,10 @@ const Layout = ({
       <div className="col-sm-4 border-right">
         <ChannelGroup />
       </div>
-      <div className="col-sm-8">col-sm-8</div>
+      <div className="col-sm-8">
+        <Messages />
+        <MessageForm />
+      </div>
     </div>
   </div>
 );
