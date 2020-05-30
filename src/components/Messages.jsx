@@ -8,9 +8,9 @@ const Messages = () => {
   const messages = useSelector((state) => getSelector('messagesForChannel')(state, currentChannelId));
   console.log('messages', messages);
   return (
-    <>
+    <div className="w-100 flex-grow-1 p-3 overflow-auto">
       {messages.map(({ id, message }) => <div key={id}>{message}</div>)}
-    </>
+    </div>
   );
 };
 

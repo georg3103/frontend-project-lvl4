@@ -31,9 +31,11 @@ const Layout = ({
         <div className="col-sm-4 border-right">
           <ChannelGroup />
         </div>
-        <div className="col-sm-8">
-          <Messages />
-          <MessageForm />
+        <div className="col-sm-8 h-100">
+          <div className="row h-100 flex-column flex-nowrap">
+            <Messages />
+            <MessageForm />
+          </div>
         </div>
       </div>
     </div>

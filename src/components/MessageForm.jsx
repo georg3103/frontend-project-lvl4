@@ -27,7 +27,10 @@ const MessageForm = ({
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className="w-100 p-3 position-relative"
+    >
       <label htmlFor="message">Message</label>
       <input
         id="message"
