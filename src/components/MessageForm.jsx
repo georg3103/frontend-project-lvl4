@@ -10,6 +10,7 @@ const MessageForm = ({
 }) => {
   const currentChannelId = useSelector(getSelector('currentChannelId'));
   const messageFormState = useSelector(getSelector('messageFormState'));
+  const user = useSelector(getSelector('user'));
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -20,6 +21,7 @@ const MessageForm = ({
         data: {
           attributes: {
             message,
+            user,
           },
         },
       };
