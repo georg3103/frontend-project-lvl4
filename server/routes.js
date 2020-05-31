@@ -1,6 +1,7 @@
 // @ts-check
 
 import _ from 'lodash';
+import moment from 'moment';
 
 const getNextId = () => Number(_.uniqueId());
 
@@ -118,6 +119,7 @@ export default (app, io, defaultState = {}) => {
         ...attributes,
         channelId: Number(req.params.channelId),
         id: getNextId(),
+        date: moment().format('LT'),
       };
       state.messages.push(message);
       console.log('state.messages', state.messages);
