@@ -8,6 +8,19 @@ import ChannelGroup from './ChannelGroup';
 import Messages from './Messages';
 import MessageForm from './MessageForm';
 import { getSelector } from '../redux';
+import ChannelAddModal from './ChannelAddModal';
+
+const modalMapper = {
+  addModal: ChannelAddModal,
+};
+
+const renderModal = (type) => {
+  const Component = modalMapper[type];
+
+  if (!Component) return null;
+
+  return <Component />;
+};
 
 const Layout = ({
   // eslint-disable-next-line no-unused-vars
@@ -15,6 +28,7 @@ const Layout = ({
   addMessage,
 }) => {
   const currentChannelId = useSelector(getSelector('currentChannelId'));
+  const modalState = useSelector(getSelector('modalState'));
 
   React.useEffect(() => {
     const socket = openSocket(process.env.PORT);
@@ -22,6 +36,11 @@ const Layout = ({
     socket.on('newMessage', (data) => {
       const message = get(data, 'data.attributes');
       addMessage({ message });
+    });
+
+    socket.on('newChannel', (data) => {
+      const channel = get(data, 'data.attributes');
+      addChannel({ channel });
     });
   }, [currentChannelId]);
 
@@ -38,6 +57,7 @@ const Layout = ({
           </div>
         </div>
       </div>
+      {renderModal(modalState)}
     </div>
   );
 };

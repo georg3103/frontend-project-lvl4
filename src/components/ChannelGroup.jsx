@@ -5,12 +5,17 @@ import cn from 'classnames';
 import { getSelector } from '../redux';
 import connect from '../connect';
 
-const ChannelGroup = ({ setCurrentChannelId }) => {
+const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
   const channels = useSelector(getSelector('channels'));
   const currentChannelId = useSelector(getSelector('currentChannelId'));
-  console.log('setCurrentChannelId', setCurrentChannelId);
+  const modalState = useSelector(getSelector('modalState'));
+  console.log('setCurrentChannelId', setCurrentChannelId, modalState);
   return (
     <>
+      <div>
+        Channels
+        <button type="button" onClick={() => showModal({ type: 'addModal' })}>+</button>
+      </div>
       {channels.map(({ id, name }) => {
         const isCurrentChannel = id === currentChannelId;
         const channelClass = cn({
@@ -24,6 +29,7 @@ const ChannelGroup = ({ setCurrentChannelId }) => {
 
 ChannelGroup.propTypes = {
   setCurrentChannelId: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired,
 };
 
 export default connect()(ChannelGroup);
