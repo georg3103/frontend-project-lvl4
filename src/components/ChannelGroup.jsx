@@ -8,8 +8,6 @@ import connect from '../connect';
 const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
   const channels = useSelector(getSelector('channels'));
   const currentChannelId = useSelector(getSelector('currentChannelId'));
-  const modalState = useSelector(getSelector('modalState'));
-  console.log('setCurrentChannelId', setCurrentChannelId, modalState);
   return (
     <>
       <div>
@@ -19,9 +17,20 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
       {channels.map(({ id, name }) => {
         const isCurrentChannel = id === currentChannelId;
         const channelClass = cn({
-          active: isCurrentChannel,
+          'text-success': isCurrentChannel,
         });
-        return <div className={channelClass} key={id}>{name}</div>;
+        return (
+          <div
+            tabIndex="0"
+            role="button"
+            className={channelClass}
+            onClick={() => setCurrentChannelId({ id })}
+            onKeyDown={() => setCurrentChannelId({ id })}
+            key={id}
+          >
+            {name}
+          </div>
+        );
       })}
     </>
   );
