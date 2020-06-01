@@ -9,27 +9,28 @@ import Messages from './Messages';
 import MessageForm from './MessageForm';
 import { getSelector } from '../redux';
 import ChannelAddModal from './ChannelAddModal';
+import ChannelEditModal from './ChannelEditModal';
+import ChannelRemoveModal from './ChannelRemoveModal';
 
 const modalMapper = {
-  addModal: ChannelAddModal,
+  addModal: () => React.createElement(ChannelAddModal),
+  editModal: (id) => React.createElement(ChannelEditModal, { id }),
+  deleteModal: (id) => React.createElement(ChannelRemoveModal, { id }),
 };
 
-const renderModal = (type) => {
-  const Component = modalMapper[type];
-
-  if (!Component) return null;
-
-  return <Component />;
+const renderModal = ({ type, id }) => {
+  if (!modalMapper[type]) return null;
+  const Component = modalMapper[type](id);
+  return Component;
 };
 
 const Layout = ({
-  // eslint-disable-next-line no-unused-vars
   addChannel,
+  editChannel,
+  removeChannel,
   addMessage,
 }) => {
-  const currentChannelId = useSelector(getSelector('currentChannelId'));
   const modalState = useSelector(getSelector('modalState'));
-
   React.useEffect(() => {
     const socket = openSocket(process.env.PORT);
 
@@ -41,6 +42,16 @@ const Layout = ({
     socket.on('newChannel', (data) => {
       const channel = get(data, 'data.attributes');
       addChannel({ channel });
+    });
+
+    socket.on('renameChannel', (data) => {
+      const channel = get(data, 'data.attributes');
+      editChannel({ channel });
+    });
+
+    socket.on('removeChannel', (data) => {
+      const channel = get(data, 'data');
+      removeChannel(channel);
     });
   }, []);
 
@@ -64,7 +75,14 @@ const Layout = ({
 
 Layout.propTypes = {
   addChannel: PropTypes.func.isRequired,
+  editChannel: PropTypes.func.isRequired,
+  removeChannel: PropTypes.func.isRequired,
   addMessage: PropTypes.func.isRequired,
+};
+
+renderModal.propTypes = {
+  type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default connect()(Layout);

@@ -14,21 +14,44 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
         Channels
         <button type="button" onClick={() => showModal({ type: 'addModal' })}>+</button>
       </div>
-      {channels.map(({ id, name }) => {
+      {channels.map(({ id, name, removable }) => {
         const isCurrentChannel = id === currentChannelId;
         const channelClass = cn({
           'text-success': isCurrentChannel,
         });
         return (
-          <div
-            tabIndex="0"
-            role="button"
-            className={channelClass}
-            onClick={() => setCurrentChannelId({ id })}
-            onKeyDown={() => setCurrentChannelId({ id })}
-            key={id}
-          >
-            {name}
+          <div className="d-flex flex-row justify-content-between" key={id}>
+            <div
+              tabIndex="0"
+              role="button"
+              className={channelClass}
+              onClick={() => setCurrentChannelId({ id })}
+              onKeyDown={() => setCurrentChannelId({ id })}
+            >
+              {name}
+            </div>
+            {
+              removable && (
+              <>
+                <div
+                  tabIndex="0"
+                  role="button"
+                  onClick={() => showModal({ type: 'deleteModal', id })}
+                  onKeyDown={() => showModal({ type: 'deleteModal', id })}
+                >
+                  delete
+                </div>
+                <div
+                  tabIndex="0"
+                  role="button"
+                  onClick={() => showModal({ type: 'editModal', id })}
+                  onKeyDown={() => showModal({ type: 'editModal', id })}
+                >
+                  edit
+                </div>
+              </>
+              )
+            }
           </div>
         );
       })}

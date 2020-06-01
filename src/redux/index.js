@@ -6,6 +6,8 @@ import messages, { actions as messagesActions, getMessages, getMessagesForChanne
 import messageForm, { actions as messageFormActions, getMessageFormState } from './messageForm';
 import modal, { actions as modalActions, getModalState } from './modal';
 import channelAdding, { actions as channelAddingActions } from './channelAdding';
+import channelEditing, { actions as channelEditingActions } from './channelEditing';
+import channelRemoving, { actions as channelRemovingActions } from './channelRemoving';
 import user, { getUser } from './user';
 
 export default combineReducers({
@@ -15,6 +17,8 @@ export default combineReducers({
   messageForm,
   modal,
   channelAdding,
+  channelEditing,
+  channelRemoving,
   user,
 });
 
@@ -25,6 +29,8 @@ const actions = {
   ...messageFormActions,
   ...modalActions,
   ...channelAddingActions,
+  ...channelEditingActions,
+  ...channelRemovingActions,
 };
 
 const selectors = {
