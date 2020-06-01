@@ -42,7 +42,7 @@ const Layout = ({
       const channel = get(data, 'data.attributes');
       addChannel({ channel });
     });
-  }, [currentChannelId]);
+  }, []);
 
   return (
     <div className="container h-100">
