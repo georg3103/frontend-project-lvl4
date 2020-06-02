@@ -8,6 +8,14 @@ import connect from '../connect';
 const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
   const channels = useSelector(getSelector('channels'));
   const currentChannelId = useSelector(getSelector('currentChannelId'));
+
+  const onEnter = (e, id) => {
+    e.preventDefault();
+    if (e.keyCode === 13) {
+      showModal({ type: 'editModal', id });
+    }
+  };
+
   return (
     <>
       <div>
@@ -45,7 +53,7 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
                   tabIndex="0"
                   role="button"
                   onClick={() => showModal({ type: 'editModal', id })}
-                  onKeyDown={() => showModal({ type: 'editModal', id })}
+                  onKeyDown={(e) => onEnter(e, id)}
                 >
                   edit
                 </div>
