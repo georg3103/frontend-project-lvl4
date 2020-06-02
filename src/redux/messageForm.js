@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 import routes from '../routes';
+import { actions as errorMessageActions } from './errorMessage';
 
 const messageFormSlice = createSlice({
   name: 'messageForm',
@@ -34,6 +35,13 @@ const submitMessage = (channelId, data, cb) => async (dispatch) => {
     cb();
   } catch (err) {
     dispatch(setErrorState());
+    let message;
+    if (err.request) {
+      message = err.request.status === 0 ? 'network' : 'access';
+    } else {
+      message = 'submit_message';
+    }
+    dispatch(errorMessageActions.setErrorMessage({ message }));
   }
 };
 

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import routes from '../routes';
 import { actions as modalActions } from './modal';
 import { actions as currentChannelActions } from './currentChannel';
+import { actions as errorMessageActions } from './errorMessage';
 
 const channelRemovingSlice = createSlice({
   name: 'channelRemoving',
@@ -39,6 +40,13 @@ const deleteChannel = (channelId) => async (dispatch, getState) => {
     dispatch(currentChannelActions.setCurrentChannelId({ id }));
   } catch (err) {
     dispatch(setErrorState());
+    let message;
+    if (err.request) {
+      message = err.request.status === 0 ? 'network' : 'access';
+    } else {
+      message = 'remove_channel';
+    }
+    dispatch(errorMessageActions.setErrorMessage({ message }));
   }
 };
 

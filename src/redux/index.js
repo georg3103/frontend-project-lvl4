@@ -8,6 +8,7 @@ import modal, { actions as modalActions, getModalState } from './modal';
 import channelAdding, { actions as channelAddingActions } from './channelAdding';
 import channelEditing, { actions as channelEditingActions } from './channelEditing';
 import channelRemoving, { actions as channelRemovingActions } from './channelRemoving';
+import errorMessage, { actions as errorMessageActions, getErrorMessage } from './errorMessage';
 import user, { getUser } from './user';
 
 export default combineReducers({
@@ -19,6 +20,7 @@ export default combineReducers({
   channelAdding,
   channelEditing,
   channelRemoving,
+  errorMessage,
   user,
 });
 
@@ -31,6 +33,7 @@ const actions = {
   ...channelAddingActions,
   ...channelEditingActions,
   ...channelRemovingActions,
+  ...errorMessageActions,
 };
 
 const selectors = {
@@ -40,6 +43,7 @@ const selectors = {
   messagesForChannel: getMessagesForChannel,
   messageFormState: getMessageFormState,
   modalState: getModalState,
+  errorMessage: getErrorMessage,
   user: getUser,
 };
 

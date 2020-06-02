@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 import routes from '../routes';
 import { actions as modalActions } from './modal';
+import { actions as errorMessageActions } from './errorMessage';
 
 const channelAddingSlice = createSlice({
   name: 'channelAdding',
@@ -36,6 +37,13 @@ const createChannel = (data, cb) => async (dispatch) => {
     dispatch(modalActions.hideModal());
   } catch (err) {
     dispatch(setErrorState());
+    let message;
+    if (err.request) {
+      message = err.request.status === 0 ? 'network' : 'access';
+    } else {
+      message = 'add_channel';
+    }
+    dispatch(errorMessageActions.setErrorMessage({ message }));
   }
 };
 
