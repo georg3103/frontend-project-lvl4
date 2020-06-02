@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -8,6 +9,7 @@ import connect from '../connect';
 const MessageForm = ({
   submitMessage,
 }) => {
+  const { t } = useTranslation();
   const currentChannelId = useSelector(getSelector('currentChannelId'));
   const messageFormState = useSelector(getSelector('messageFormState'));
   const user = useSelector(getSelector('user'));
@@ -33,7 +35,7 @@ const MessageForm = ({
       onSubmit={formik.handleSubmit}
       className="w-100 p-3 position-relative"
     >
-      <label htmlFor="message">Message</label>
+      <label htmlFor="message">{t('message')}</label>
       <input
         id="message"
         name="message"

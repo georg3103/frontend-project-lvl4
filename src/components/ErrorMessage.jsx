@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +7,7 @@ import { getSelector } from '../redux';
 import connect from '../connect';
 
 const ErrorMessage = () => {
+  const { t } = useTranslation();
   const [show, setShow] = React.useState(true);
   const { message: errorMessage } = useSelector(getSelector('errorMessage'));
   const errorMessageStyling = {
@@ -19,7 +21,8 @@ const ErrorMessage = () => {
     <Alert style={errorMessageStyling} show={show} variant="danger">
       <Alert.Heading>Error</Alert.Heading>
       <p>
-        Desctiption:
+        {t('description')}
+        :
         {errorMessage}
       </p>
       <hr />

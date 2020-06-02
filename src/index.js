@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import gon from 'gon';
+import './i18n';
 import App from './components/App';
 import slices from './redux';
 import '../assets/application.scss';

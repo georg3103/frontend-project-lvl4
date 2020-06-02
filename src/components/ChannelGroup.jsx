@@ -1,11 +1,14 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { getSelector } from '../redux';
 import connect from '../connect';
 
+
 const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
+  const { t } = useTranslation();
   const channels = useSelector(getSelector('channels'));
   const currentChannelId = useSelector(getSelector('currentChannelId'));
 
@@ -19,7 +22,7 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
   return (
     <>
       <div>
-        Channels
+        {t('channels')}
         <button type="button" onClick={() => showModal({ type: 'addModal' })}>+</button>
       </div>
       {channels.map(({ id, name, removable }) => {
@@ -47,7 +50,7 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
                   onClick={() => showModal({ type: 'deleteModal', id })}
                   onKeyDown={() => showModal({ type: 'deleteModal', id })}
                 >
-                  delete
+                  {t('delete')}
                 </div>
                 <div
                   tabIndex="0"
@@ -55,7 +58,7 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
                   onClick={() => showModal({ type: 'editModal', id })}
                   onKeyDown={(e) => onEnter(e, id)}
                 >
-                  edit
+                  {t('edit')}
                 </div>
               </>
               )

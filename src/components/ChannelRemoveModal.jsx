@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getSelector } from '../redux';
@@ -9,15 +10,16 @@ const ChannelAddModal = ({
   deleteChannel,
   id,
 }) => {
+  const { t } = useTranslation();
   const modalState = useSelector(getSelector('modalState'));
   return (
-    <Modal title="Edit Channel">
+    <Modal title={t('remove_channel_title')}>
       <button
         type="button"
         onClick={() => deleteChannel(id)}
         disabled={modalState === 'fetching'}
       >
-        Delete
+        {t('delete')}
       </button>
     </Modal>
   );
