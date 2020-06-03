@@ -12,6 +12,12 @@ const MessageForm = ({
   const { t } = useTranslation();
   const currentChannelId = useSelector(getSelector('currentChannelId'));
   const messageFormState = useSelector(getSelector('messageFormState'));
+  const inputElement = React.useRef(null);
+  React.useEffect(() => {
+    if (inputElement.current) {
+      inputElement.current.focus();
+    }
+  }, []);
   const user = useSelector(getSelector('user'));
   const formik = useFormik({
     initialValues: {
@@ -27,7 +33,13 @@ const MessageForm = ({
           },
         },
       };
-      submitMessage(currentChannelId, data, resetForm);
+      const onSubmit = () => {
+        resetForm();
+        if (inputElement.current) {
+          inputElement.current.focus();
+        }
+      };
+      submitMessage(currentChannelId, data, onSubmit);
     },
   });
   return (
@@ -40,6 +52,7 @@ const MessageForm = ({
         id="message"
         name="message"
         type="text"
+        ref={inputElement}
         onChange={formik.handleChange}
         value={formik.values.message}
         disabled={messageFormState === 'fetching'}

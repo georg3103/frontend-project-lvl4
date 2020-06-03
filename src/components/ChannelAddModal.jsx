@@ -28,6 +28,12 @@ const ChannelAddModal = ({
       createChannel(data, resetForm);
     },
   });
+  const inputElement = React.useRef(null);
+  React.useEffect(() => {
+    if (inputElement.current) {
+      inputElement.current.focus();
+    }
+  }, []);
   return (
     <Modal title={t('add_channel_title')}>
       <form
@@ -39,6 +45,7 @@ const ChannelAddModal = ({
           id="name"
           name="name"
           type="text"
+          ref={inputElement}
           onChange={formik.handleChange}
           value={formik.values.name}
           disabled={modalState === 'fetching'}
