@@ -4,10 +4,15 @@ import { getSelector } from '../redux';
 import connect from '../connect';
 
 const Messages = () => {
+  const container = React.useRef(null);
   const currentChannelId = useSelector(getSelector('currentChannelId'));
   const messages = useSelector((state) => getSelector('messagesForChannel')(state, currentChannelId));
+
+  React.useEffect(() => {
+    container.current.scrollTo(0, container.current.scrollHeight);
+  });
   return (
-    <div className="w-100 flex-grow-1 p-3 overflow-auto">
+    <div ref={container} className="w-100 flex-grow-1 p-3 overflow-auto">
       {messages.map(({
         id, message, user, date,
       }) => (
