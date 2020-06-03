@@ -17,9 +17,9 @@ const Messages = () => {
         id, message, user, date,
       }) => (
         <div key={id}>
-          <div>{user}</div>
-          <div>{message}</div>
-          <div>{date}</div>
+          <div><b>{user}</b></div>
+          <p className="mb-0">{message}</p>
+          <p className="mb-2"><small className="text-muted">{date}</small></p>
         </div>
       ))}
     </div>

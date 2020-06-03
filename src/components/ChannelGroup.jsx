@@ -21,27 +21,26 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
 
   return (
     <>
-      <div>
+      <h4 className="d-flex flex-row justify-content-around pt-2">
         {t('channels')}
-        <button type="button" onClick={() => showModal({ type: 'addModal' })}>+</button>
-      </div>
+        <button type="button" className="btn btn-block" onClick={() => showModal({ type: 'addModal' })}>+</button>
+      </h4>
       {channels.map(({ id, name, removable }) => {
         const isCurrentChannel = id === currentChannelId;
         const channelClass = cn({
-          'text-success': isCurrentChannel,
-        });
+          'bg-primary': isCurrentChannel,
+        }, ['nav-link btn btn-block nav-pills nav-fill d-flex flex-row justify-content-between']);
         return (
           <div className="d-flex flex-row justify-content-between" key={id}>
-            <div
+            <button
+              type="button"
               tabIndex="0"
-              role="button"
               className={channelClass}
               onClick={() => setCurrentChannelId({ id })}
               onKeyDown={() => setCurrentChannelId({ id })}
             >
               {name}
-            </div>
-            {
+              {
               removable && (
               <>
                 <div
@@ -63,6 +62,7 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
               </>
               )
             }
+            </button>
           </div>
         );
       })}
