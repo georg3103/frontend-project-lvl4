@@ -1,22 +1,30 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import { getSelector } from '../redux';
-import connect from '../connect';
-import Modal from './Modal';
+import { actions, getSelector } from '../../redux';
+import Modal from '../Modal';
 
 const ChannelAddModal = ({
-  renameChannel,
   id,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const modalState = useSelector(getSelector('modalState'));
+  const channels = useSelector(getSelector('channels'));
+  const channelsNames = channels.map(({ name }) => name);
+
+  const validationSchema = Yup.object({
+    name: Yup.string().notOneOf(channelsNames).required('Required'),
+  });
+
   const formik = useFormik({
     initialValues: {
       name: '',
     },
+    validationSchema,
     onSubmit: (values, { resetForm }) => {
       const { name } = values;
       const data = {
@@ -26,7 +34,7 @@ const ChannelAddModal = ({
           },
         },
       };
-      renameChannel(id, data, resetForm);
+      dispatch(actions.renameChannel(id, data, resetForm));
     },
   });
   const inputElement = React.useRef(null);
@@ -46,6 +54,7 @@ const ChannelAddModal = ({
           id="name"
           name="name"
           type="text"
+          className="ml-2"
           ref={inputElement}
           onChange={formik.handleChange}
           value={formik.values.name}
@@ -57,8 +66,7 @@ const ChannelAddModal = ({
 };
 
 ChannelAddModal.propTypes = {
-  renameChannel: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
 };
 
-export default connect()(ChannelAddModal);
+export default ChannelAddModal;
