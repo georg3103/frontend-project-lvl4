@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
-import connect from '../connect';
+import { actions } from '../redux';
 
-function MyModal({ title, hideModal, children }) {
+function MyModal({ title, children }) {
+  const dispatch = useDispatch();
   return (
     <>
-      <Modal show onHide={hideModal}>
+      <Modal show onHide={() => dispatch(actions.hideModal())}>
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
@@ -18,8 +20,7 @@ function MyModal({ title, hideModal, children }) {
 
 MyModal.propTypes = {
   title: PropTypes.string.isRequired,
-  hideModal: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default connect()(MyModal);
+export default MyModal;

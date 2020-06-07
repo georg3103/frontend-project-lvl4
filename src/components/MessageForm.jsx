@@ -1,14 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { getSelector } from '../redux';
-import connect from '../connect';
+import { actions, getSelector } from '../redux';
 
-const MessageForm = ({
-  submitMessage,
-}) => {
+const MessageForm = () => {
+  const dispatch = useDispatch();
   const currentChannelId = useSelector(getSelector('currentChannelId'));
   const messageFormState = useSelector(getSelector('messageFormState'));
   const inputElement = React.useRef(null);
@@ -18,10 +16,16 @@ const MessageForm = ({
     }
   }, []);
   const user = useSelector(getSelector('user'));
+
+  const validationSchema = Yup.object({
+    message: Yup.string().matches(/\S/).required('Required'),
+  });
+
   const formik = useFormik({
     initialValues: {
       message: '',
     },
+    validationSchema,
     onSubmit: (values, { resetForm }) => {
       const { message } = values;
       const data = {
@@ -38,19 +42,28 @@ const MessageForm = ({
           inputElement.current.focus();
         }
       };
-      submitMessage(currentChannelId, data, onSubmit);
+      dispatch(actions.submitMessage(currentChannelId, data, onSubmit));
     },
   });
 
   const onKeyDown = (event) => {
     const message = get(formik, 'values.message', '');
 
-    if (!message.length || (event.keyCode !== 13 && !event.shiftKey)) return;
+    if (
+      !message.length
+      || (event.keyCode !== 13)
+      || (event.keyCode === 13 && event.shiftKey)
+    ) return;
 
     event.preventDefault();
 
     formik.handleSubmit();
   };
+
+  const textAreaStyle = {
+    resize: 'none',
+  };
+
   return (
     <div role="presentation" onKeyDown={onKeyDown}>
       <form
@@ -63,6 +76,7 @@ const MessageForm = ({
           name="message"
           type="text"
           placeholder="Message"
+          style={textAreaStyle}
           ref={inputElement}
           onChange={formik.handleChange}
           value={formik.values.message}
@@ -73,8 +87,4 @@ const MessageForm = ({
   );
 };
 
-MessageForm.propTypes = {
-  submitMessage: PropTypes.func.isRequired,
-};
-
-export default connect()(MessageForm);
+export default MessageForm;

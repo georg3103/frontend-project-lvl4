@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { getSelector } from '../redux';
-import connect from '../connect';
 
 const ErrorMessage = () => {
   const { t } = useTranslation();
@@ -35,4 +34,4 @@ const ErrorMessage = () => {
   );
 };
 
-export default connect()(ErrorMessage);
+export default ErrorMessage;

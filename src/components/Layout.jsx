@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import openSocket from 'socket.io-client';
 import { get } from 'lodash';
-import { useSelector } from 'react-redux';
-import connect from '../connect';
+import { useSelector, useDispatch } from 'react-redux';
+import { openSocket } from '../helper';
 import ChannelGroup from './ChannelGroup';
 import Messages from './Messages';
 import MessageForm from './MessageForm';
-import { getSelector } from '../redux';
-import ChannelAddModal from './ChannelAddModal';
-import ChannelEditModal from './ChannelEditModal';
-import ChannelRemoveModal from './ChannelRemoveModal';
+import { actions, getSelector } from '../redux';
+import ChannelAddModal from './modals/ChannelAddModal';
+import ChannelEditModal from './modals/ChannelEditModal';
+import ChannelRemoveModal from './modals/ChannelRemoveModal';
 import ErrorMessage from './ErrorMessage';
 
 const modalMapper = {
@@ -29,35 +28,31 @@ const renderErrorMesage = (message) => {
   return message ? <ErrorMessage /> : null;
 };
 
-const Layout = ({
-  addChannel,
-  editChannel,
-  removeChannel,
-  addMessage,
-}) => {
+const Layout = () => {
+  const dispatch = useDispatch();
   const modalState = useSelector(getSelector('modalState'));
   const { message: errorMessage } = useSelector(getSelector('errorMessage'));
   React.useEffect(() => {
-    const socket = openSocket(process.env.PORT);
+    const socket = openSocket();
 
     socket.on('newMessage', (data) => {
       const message = get(data, 'data.attributes');
-      addMessage({ message });
+      dispatch(actions.addMessage({ message }));
     });
 
     socket.on('newChannel', (data) => {
       const channel = get(data, 'data.attributes');
-      addChannel({ channel });
+      dispatch(actions.addChannel({ channel }));
     });
 
     socket.on('renameChannel', (data) => {
       const channel = get(data, 'data.attributes');
-      editChannel({ channel });
+      dispatch(actions.editChannel({ channel }));
     });
 
     socket.on('removeChannel', (data) => {
       const channel = get(data, 'data');
-      removeChannel(channel);
+      dispatch(actions.removeChannel(channel));
     });
   }, []);
 
@@ -80,16 +75,9 @@ const Layout = ({
   );
 };
 
-Layout.propTypes = {
-  addChannel: PropTypes.func.isRequired,
-  editChannel: PropTypes.func.isRequired,
-  removeChannel: PropTypes.func.isRequired,
-  addMessage: PropTypes.func.isRequired,
-};
-
 renderModal.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
 
-export default connect()(Layout);
+export default Layout;

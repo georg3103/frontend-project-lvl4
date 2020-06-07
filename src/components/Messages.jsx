@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getSelector } from '../redux';
-import connect from '../connect';
 
 const Messages = () => {
   const container = React.useRef(null);
@@ -10,7 +9,7 @@ const Messages = () => {
 
   React.useEffect(() => {
     container.current.scrollTo(0, container.current.scrollHeight);
-  });
+  }, [messages]);
   return (
     <div ref={container} className="w-100 flex-grow-1 p-3 overflow-auto">
       {messages.map(({
@@ -26,4 +25,4 @@ const Messages = () => {
   );
 };
 
-export default connect()(Messages);
+export default Messages;

@@ -1,21 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
-import { getSelector } from '../redux';
-import connect from '../connect';
+import { actions, getSelector } from '../redux';
 
-
-const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
+const ChannelGroup = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const channels = useSelector(getSelector('channels'));
   const currentChannelId = useSelector(getSelector('currentChannelId'));
 
+  const nameStyle = {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  };
+
   const onEnter = (e, id) => {
     e.preventDefault();
     if (e.keyCode === 13) {
-      showModal({ type: 'editModal', id });
+      dispatch(actions.showModal({ type: 'editModal', id }));
     }
   };
 
@@ -23,7 +27,7 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
     <>
       <h4 className="d-flex flex-row justify-content-around pt-2">
         {t('channels')}
-        <button type="button" className="btn btn-block" onClick={() => showModal({ type: 'addModal' })}>+</button>
+        <button type="button" className="btn btn-block" onClick={() => dispatch(actions.showModal({ type: 'addModal' }))}>+</button>
       </h4>
       {channels.map(({ id, name, removable }) => {
         const isCurrentChannel = id === currentChannelId;
@@ -36,32 +40,41 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
               type="button"
               tabIndex="0"
               className={channelClass}
-              onClick={() => setCurrentChannelId({ id })}
-              onKeyDown={() => setCurrentChannelId({ id })}
+              onClick={() => dispatch(actions.setCurrentChannelId({ id }))}
+              onKeyDown={() => dispatch(actions.setCurrentChannelId({ id }))}
             >
-              {name}
-              {
-              removable && (
-              <>
-                <div
-                  tabIndex="0"
-                  role="button"
-                  onClick={() => showModal({ type: 'deleteModal', id })}
-                  onKeyDown={() => showModal({ type: 'deleteModal', id })}
-                >
-                  {t('delete')}
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm text-left" style={nameStyle}>
+                    {'# '}
+                    {name}
+                  </div>
+                  {
+                    removable && (
+                    <>
+                      <div
+                        className="col-sm"
+                        tabIndex="0"
+                        role="button"
+                        onClick={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
+                        onKeyDown={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
+                      >
+                        {t('delete')}
+                      </div>
+                      <div
+                        className="col-sm"
+                        tabIndex="0"
+                        role="button"
+                        onClick={() => dispatch(actions.showModal({ type: 'editModal', id }))}
+                        onKeyDown={(e) => onEnter(e, id)}
+                      >
+                        {t('edit')}
+                      </div>
+                    </>
+                    )
+                  }
                 </div>
-                <div
-                  tabIndex="0"
-                  role="button"
-                  onClick={() => showModal({ type: 'editModal', id })}
-                  onKeyDown={(e) => onEnter(e, id)}
-                >
-                  {t('edit')}
-                </div>
-              </>
-              )
-            }
+              </div>
             </button>
           </div>
         );
@@ -70,9 +83,4 @@ const ChannelGroup = ({ setCurrentChannelId, showModal }) => {
   );
 };
 
-ChannelGroup.propTypes = {
-  setCurrentChannelId: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired,
-};
-
-export default connect()(ChannelGroup);
+export default ChannelGroup;
