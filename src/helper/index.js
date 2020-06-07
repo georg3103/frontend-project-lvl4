@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import faker from 'faker';
+import socketClient from 'socket.io-client';
 
 const cookieProp = 'user';
 
@@ -17,7 +18,7 @@ const getUser = () => {
   return name;
 };
 
-const genUser = () => {
+export const generateUser = () => {
   const name = getUser();
 
   if (name) return name;
@@ -27,4 +28,4 @@ const genUser = () => {
   return newName;
 };
 
-export default genUser;
+export const openSocket = () => socketClient(process.env.PORT);
