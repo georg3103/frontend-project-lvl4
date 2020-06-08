@@ -7,10 +7,22 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import gon from 'gon';
-import './i18n';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import resources from './i18n';
 import App from './components/App';
 import slices from './redux';
 import '../assets/application.scss';
+
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'en',
+  keySeparator: false,
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';

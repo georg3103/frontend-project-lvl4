@@ -1,7 +1,4 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
-const resources = {
+export default {
   en: {
     translation: {
       add_channel: 'Error in adding channel.',
@@ -23,14 +20,3 @@ const resources = {
     },
   },
 };
-
-i18n.use(initReactI18next).init({
-  resources,
-  lng: 'en',
-  keySeparator: false,
-  interpolation: {
-    escapeValue: false,
-  },
-});
-
-export default i18n;
