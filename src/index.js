@@ -1,7 +1,4 @@
 // @ts-check
-
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -11,7 +8,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import resources from './i18n';
 import App from './components/App';
-import slices from './redux';
+import rootReducer from './redux';
 import '../assets/application.scss';
 
 
@@ -29,7 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const store = configureStore({
-  reducer: slices,
+  reducer: rootReducer,
   preloadedState: { ...gon },
 });
 
