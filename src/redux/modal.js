@@ -18,13 +18,13 @@ const modalSlice = createSlice({
       return { ...state, type: 'none' };
     },
     setActiveState(state) {
-      return { ...state, type: 'active' };
+      return { ...state, modalState: 'active' };
     },
     setFetchingState(state) {
-      return { ...state, type: 'fetching' };
+      return { ...state, modalState: 'fetching' };
     },
     setErrorState(state) {
-      return { ...state, type: 'error' };
+      return { ...state, modalState: 'error' };
     },
   },
 });
