@@ -5,9 +5,6 @@ import currentChannelId, { actions as currentChannelIdActions, getCurrentChannel
 import messages, { actions as messagesActions, getMessages, getMessagesForChannel } from './messages';
 import messageForm, { actions as messageFormActions, getMessageFormState } from './messageForm';
 import modal, { actions as modalActions, getModalState } from './modal';
-import channelAdding, { actions as channelAddingActions } from './channelAdding';
-import channelEditing, { actions as channelEditingActions } from './channelEditing';
-import channelRemoving, { actions as channelRemovingActions } from './channelRemoving';
 import errorMessage, { actions as errorMessageActions, getErrorMessage } from './errorMessage';
 import user, { getUser } from './user';
 
@@ -17,9 +14,6 @@ export default combineReducers({
   messages,
   messageForm,
   modal,
-  channelAdding,
-  channelEditing,
-  channelRemoving,
   errorMessage,
   user,
 });
@@ -30,9 +24,6 @@ const actions = {
   ...currentChannelIdActions,
   ...messageFormActions,
   ...modalActions,
-  ...channelAddingActions,
-  ...channelEditingActions,
-  ...channelRemovingActions,
   ...errorMessageActions,
 };
 
