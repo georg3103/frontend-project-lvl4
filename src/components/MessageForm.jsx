@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { get } from 'lodash';
+import get from 'lodash/get';
 import { actions, getSelector } from '../redux';
 
 const MessageForm = () => {

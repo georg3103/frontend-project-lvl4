@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import get from 'lodash/get';
 import { useSelector, useDispatch } from 'react-redux';
 import { openSocket } from '../helper';
 import ChannelGroup from './ChannelGroup';

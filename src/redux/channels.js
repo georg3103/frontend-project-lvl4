@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { find } from 'lodash';
+import find from 'lodash/find';
 
 const channelsSlice = createSlice({
   name: 'channels',
