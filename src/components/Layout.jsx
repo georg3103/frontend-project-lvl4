@@ -54,7 +54,7 @@ const Layout = () => {
       const channel = get(data, 'data');
       dispatch(actions.removeChannel(channel));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="container h-100">

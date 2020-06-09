@@ -9,7 +9,7 @@ import socket from 'socket.io';
 import fastify from 'fastify';
 import pointOfView from 'point-of-view';
 import fastifyStatic from 'fastify-static';
-import addRoutes from './routes.js';
+import addRoutes from './routes';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const appPath = path.join(__dirname, '..');
