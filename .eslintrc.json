@@ -21,14 +21,9 @@
     "plugins": [
         "react"
     ],
-    "rules": {
-        "import/no-unresolved": "off",
-        "jsx-a11y/label-has-associated-control": "off",
-        "arrow-body-style": "off"
-    },
     "overrides": [
         {
-            "files": ["*.config.js", "*.test.js", "index.js"],
+            "files": ["*.test.js"],
             "rules": {
                 "import/no-extraneous-dependencies": "off",
                 "no-undef": "off",

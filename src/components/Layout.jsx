@@ -25,7 +25,8 @@ const renderModal = ({ type, id }) => {
 };
 
 const renderErrorMesage = (message) => {
-  return message ? <ErrorMessage /> : null;
+  const errorMessage = message ? <ErrorMessage /> : null;
+  return errorMessage;
 };
 
 const Layout = () => {

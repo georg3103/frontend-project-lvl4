@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/no-unresolved
 import gon from 'gon';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
