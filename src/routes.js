@@ -5,8 +5,7 @@ const host = '';
 const prefix = 'api/v1';
 
 export default {
-  channelsPath: () => path.join(host, prefix, 'channels'),
-  channelPath: (id) => path.join(host, prefix, 'channels', String(id)),
-  channelMessagesPath: (id) => path.join(host, prefix, 'channels', String(id), 'messages'),
-
+  getChannelsPath: () => path.join(host, prefix, 'channels'),
+  getChannelPath: (id) => path.join(host, prefix, 'channels', String(id)),
+  getChannelMessagesPath: (id) => path.join(host, prefix, 'channels', String(id), 'messages'),
 };

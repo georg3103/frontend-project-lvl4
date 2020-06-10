@@ -30,7 +30,7 @@ const submitMessage = (channelId, data, cb) => async (dispatch) => {
   dispatch(setFetchingState());
 
   try {
-    await axios.post(routes.channelMessagesPath(channelId), data);
+    await axios.post(routes.getChannelMessagesPath(channelId), data);
     dispatch(setActiveState());
     cb();
   } catch (err) {

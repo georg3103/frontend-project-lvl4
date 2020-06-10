@@ -40,7 +40,7 @@ const createChannel = (data, cb) => async (dispatch) => {
   dispatch(setFetchingState());
 
   try {
-    await axios.post(routes.channelsPath(), data);
+    await axios.post(routes.getChannelsPath(), data);
     dispatch(setActiveState());
     cb();
     dispatch(hideModal());
@@ -60,7 +60,7 @@ const renameChannel = (channelId, data, cb) => async (dispatch) => {
   dispatch(setFetchingState());
 
   try {
-    await axios.patch(routes.channelPath(channelId), data);
+    await axios.patch(routes.getChannelPath(channelId), data);
     dispatch(setActiveState());
     cb();
     dispatch(hideModal());
@@ -80,7 +80,7 @@ const deleteChannel = (channelId) => async (dispatch, getState) => {
   dispatch(setFetchingState());
 
   try {
-    await axios.delete(routes.channelPath(channelId));
+    await axios.delete(routes.getChannelPath(channelId));
     dispatch(setActiveState());
     dispatch(hideModal());
     const { channels } = getState();
