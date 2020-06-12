@@ -1,4 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import routes from '../routes';
+
+const submitMessage = createAsyncThunk(
+  'messages/submitMessage',
+  async ({ channelId, data }) => {
+    await axios.post(routes.getChannelMessagesPath(channelId), data);
+  },
+);
+
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -8,9 +18,13 @@ const messagesSlice = createSlice({
       state.push(action.payload.message);
     },
   },
+  extraReducers: {
+    [submitMessage.fulfilled]: () => {},
+    [submitMessage.rejected]: (err) => { throw new Error(err); },
+  },
 });
 
-export const actions = { ...messagesSlice.actions };
+export const actions = { ...messagesSlice.actions, submitMessage };
 
 export const getMessages = (state) => state.messages;
 

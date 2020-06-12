@@ -4,22 +4,38 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import get from 'lodash/get';
 import { actions, getSelector } from '../redux';
+import UserContext from '../context';
 
 const MessageForm = () => {
   const dispatch = useDispatch();
-  const currentChannelId = useSelector(getSelector('currentChannelId'));
-  const messageFormState = useSelector(getSelector('messageFormState'));
+  const { currentChannelId } = useSelector(getSelector('channels'));
   const inputElement = React.useRef(null);
+  const user = React.useContext(UserContext);
+
   React.useEffect(() => {
     if (inputElement.current) {
       inputElement.current.focus();
     }
   }, []);
-  const user = useSelector(getSelector('user'));
 
   const validationSchema = Yup.object({
     message: Yup.string().matches(/\S/).required('Required'),
   });
+
+  const submitMessage = async ({ channelId, data }, cb) => {
+    try {
+      await dispatch(actions.submitMessage({ channelId, data }));
+      cb();
+    } catch (err) {
+      let message;
+      if (err.request) {
+        message = err.request.status === 0 ? 'network' : 'access';
+      } else {
+        message = 'submit_message';
+      }
+      dispatch(actions.setErrorMessage({ message }));
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -42,7 +58,7 @@ const MessageForm = () => {
           inputElement.current.focus();
         }
       };
-      dispatch(actions.submitMessage(currentChannelId, data, onSubmit));
+      submitMessage({ channelId: currentChannelId, data }, onSubmit);
     },
   });
 
@@ -80,7 +96,7 @@ const MessageForm = () => {
           ref={inputElement}
           onChange={formik.handleChange}
           value={formik.values.message}
-          disabled={messageFormState === 'fetching'}
+          disabled={formik.isSubmitting}
         />
       </form>
     </div>

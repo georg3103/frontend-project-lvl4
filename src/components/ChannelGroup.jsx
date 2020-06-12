@@ -7,8 +7,7 @@ import { actions, getSelector } from '../redux';
 const ChannelGroup = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const channels = useSelector(getSelector('channels'));
-  const currentChannelId = useSelector(getSelector('currentChannelId'));
+  const { channels, currentChannelId } = useSelector(getSelector('channels'));
 
   const nameStyle = {
     textOverflow: 'ellipsis',

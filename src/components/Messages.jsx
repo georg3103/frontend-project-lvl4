@@ -4,7 +4,7 @@ import { getSelector } from '../redux';
 
 const Messages = () => {
   const container = React.useRef(null);
-  const currentChannelId = useSelector(getSelector('currentChannelId'));
+  const { currentChannelId } = useSelector(getSelector('channels'));
   const messages = useSelector((state) => getSelector('messagesForChannel')(state, currentChannelId));
 
   React.useEffect(() => {

@@ -11,6 +11,8 @@ import resources from './i18n';
 import App from './components/App';
 import rootReducer from './redux';
 import '../assets/application.scss';
+import { generateUser } from './helper';
+import UserContext from './context';
 
 
 i18n.use(initReactI18next).init({
@@ -26,14 +28,26 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
+const userName = generateUser();
+
+const preloadedState = {
+  channels: {
+    channels: gon.channels,
+    currentChannelId: gon.currentChannelId,
+  },
+  messages: gon.messages,
+};
+
 const store = configureStore({
   reducer: rootReducer,
-  preloadedState: { ...gon },
+  preloadedState,
 });
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <UserContext.Provider value={userName}>
+      <App />
+    </UserContext.Provider>
   </Provider>,
   document.querySelector('#chat'),
 );

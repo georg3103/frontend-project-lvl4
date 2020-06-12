@@ -12,7 +12,7 @@ const setUser = () => {
   return name;
 };
 
-const getUser = () => {
+export const getUser = () => {
   const name = Cookies.get(cookieProp);
 
   return name;

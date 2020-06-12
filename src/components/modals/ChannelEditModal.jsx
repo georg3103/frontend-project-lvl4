@@ -12,13 +12,28 @@ const ChannelAddModal = ({
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const modalState = useSelector(getSelector('modalState'));
-  const channels = useSelector(getSelector('channels'));
+  const { channels } = useSelector(getSelector('channels'));
   const channelsNames = channels.map(({ name }) => name);
 
   const validationSchema = Yup.object({
     name: Yup.string().notOneOf(channelsNames).required('Required'),
   });
+
+  const renameChannel = async ({ channelId, data }, cb) => {
+    try {
+      await dispatch(actions.renameChannel({ channelId, data }));
+      cb();
+      dispatch(actions.hideModal());
+    } catch (err) {
+      let message;
+      if (err.request) {
+        message = err.request.status === 0 ? 'network' : 'access';
+      } else {
+        message = 'add_channel';
+      }
+      dispatch(actions.errorMessageActions.setErrorMessage({ message }));
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +49,7 @@ const ChannelAddModal = ({
           },
         },
       };
-      dispatch(actions.renameChannel(id, data, resetForm));
+      renameChannel({ channelId: id, data }, resetForm);
     },
   });
   const inputElement = React.useRef(null);
@@ -58,7 +73,7 @@ const ChannelAddModal = ({
           ref={inputElement}
           onChange={formik.handleChange}
           value={formik.values.name}
-          disabled={modalState === 'fetching'}
+          disabled={formik.isSubmitting}
         />
       </form>
     </Modal>
