@@ -37,6 +37,7 @@ const Layout = () => {
     socket.on('newChannel', (data) => {
       const channel = get(data, 'data.attributes');
       dispatch(actions.addChannel({ channel }));
+      dispatch(actions.setCurrentChannelId({ id: channel.id }));
     });
 
     socket.on('renameChannel', (data) => {
@@ -47,7 +48,13 @@ const Layout = () => {
     socket.on('removeChannel', (data) => {
       const channel = get(data, 'data');
       dispatch(actions.removeChannel(channel));
+      dispatch(actions.removeChannelMessages({ channelId: channel.id }));
     });
+
+    // TODO: how to abort socket? AbortController?
+    return function cleanup() {
+      socket.disconnect();
+    };
   }, [dispatch]);
 
   return (
