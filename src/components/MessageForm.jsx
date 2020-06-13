@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -8,6 +9,7 @@ import UserContext from '../context';
 
 const MessageForm = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { currentChannelId } = useSelector(getSelector('channels'));
   const inputElement = React.useRef(null);
   const user = React.useContext(UserContext);
@@ -22,19 +24,25 @@ const MessageForm = () => {
     message: Yup.string().matches(/\S/).required('Required'),
   });
 
-  const submitMessage = async ({ channelId, data }, cb) => {
+  const handleSubmit = async ({ message }, { resetForm, setStatus, setSubmitting }) => {
+    const data = {
+      data: {
+        attributes: {
+          message,
+          user,
+        },
+      },
+    };
     try {
-      await dispatch(actions.submitMessage({ channelId, data }));
-      cb();
-    } catch (err) {
-      let message;
-      if (err.request) {
-        message = err.request.status === 0 ? 'network' : 'access';
-      } else {
-        message = 'submit_message';
+      await dispatch(actions.submitMessage({ channelId: currentChannelId, data }));
+      resetForm();
+      if (inputElement.current) {
+        inputElement.current.focus();
       }
-      dispatch(actions.setErrorMessage({ message }));
+    } catch (e) {
+      setStatus(t('network'));
     }
+    setSubmitting(false);
   };
 
   const formik = useFormik({
@@ -42,24 +50,7 @@ const MessageForm = () => {
       message: '',
     },
     validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      const { message } = values;
-      const data = {
-        data: {
-          attributes: {
-            message,
-            user,
-          },
-        },
-      };
-      const onSubmit = () => {
-        resetForm();
-        if (inputElement.current) {
-          inputElement.current.focus();
-        }
-      };
-      submitMessage({ channelId: currentChannelId, data }, onSubmit);
-    },
+    onSubmit: handleSubmit,
   });
 
   const onKeyDown = (event) => {
@@ -91,13 +82,17 @@ const MessageForm = () => {
           id="message"
           name="message"
           type="text"
-          placeholder="Message"
+          placeholder={t('message')}
           style={textAreaStyle}
           ref={inputElement}
           onChange={formik.handleChange}
           value={formik.values.message}
           disabled={formik.isSubmitting}
         />
+        <div className="text-danger">
+          {formik.status}
+          &nbsp;
+        </div>
       </form>
     </div>
   );

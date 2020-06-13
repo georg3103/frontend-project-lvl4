@@ -17,20 +17,23 @@ const ChannelAddModal = () => {
     name: Yup.string().notOneOf(channelsNames).required('Required'),
   });
 
-  const createNewChannel = async (data, cb) => {
+  const handleSubmit = async ({ name }, { resetForm, setStatus, setSubmitting }) => {
+    const data = {
+      data: {
+        attributes: {
+          name,
+        },
+      },
+    };
+
     try {
-      await dispatch(actions.createChannel(data, cb));
-      cb();
+      await dispatch(actions.createChannel(data));
+      resetForm();
       dispatch(actions.hideModal());
-    } catch (err) {
-      let message;
-      if (err.request) {
-        message = err.request.status === 0 ? 'network' : 'access';
-      } else {
-        message = 'add_channel';
-      }
-      dispatch(actions.errorMessageActions.setErrorMessage({ message }));
+    } catch (e) {
+      setStatus(t('network'));
     }
+    setSubmitting(false);
   };
 
   const formik = useFormik({
@@ -38,17 +41,7 @@ const ChannelAddModal = () => {
       name: '',
     },
     validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      const { name } = values;
-      const data = {
-        data: {
-          attributes: {
-            name,
-          },
-        },
-      };
-      createNewChannel(data, resetForm);
-    },
+    onSubmit: handleSubmit,
   });
   const inputElement = React.useRef(null);
   React.useEffect(() => {
@@ -58,6 +51,10 @@ const ChannelAddModal = () => {
   }, []);
   return (
     <Modal title={t('add_channel_title')}>
+      <h6 className="text-danger">
+        {formik.status}
+        &nbsp;
+      </h6>
       <form
         onSubmit={formik.handleSubmit}
         className="w-100 p-3 position-relative"

@@ -10,7 +10,6 @@ import { actions, getSelector } from '../redux';
 import ChannelAddModal from './modals/ChannelAddModal';
 import ChannelEditModal from './modals/ChannelEditModal';
 import ChannelRemoveModal from './modals/ChannelRemoveModal';
-import ErrorMessage from './ErrorMessage';
 
 const modalMapper = {
   addModal: () => React.createElement(ChannelAddModal),
@@ -24,15 +23,9 @@ const renderModal = ({ type, id }) => {
   return Component;
 };
 
-const renderErrorMesage = (message) => {
-  const errorMessage = message ? <ErrorMessage /> : null;
-  return errorMessage;
-};
-
 const Layout = () => {
   const dispatch = useDispatch();
   const modalState = useSelector(getSelector('modalState'));
-  const { message: errorMessage } = useSelector(getSelector('errorMessage'));
   React.useEffect(() => {
     const socket = openSocket();
 
@@ -71,7 +64,6 @@ const Layout = () => {
         </div>
       </div>
       {renderModal(modalState)}
-      {renderErrorMesage(errorMessage)}
     </div>
   );
 };

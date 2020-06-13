@@ -18,21 +18,16 @@ const ChannelAddModal = ({
     id: Yup.number().required('Required'),
   });
 
-  const deleteChannel = async ({ channelId }, cb) => {
+  const handleSubmit = async (_, { resetForm, setStatus, setSubmitting }) => {
     try {
-      await dispatch(actions.deleteChannel({ channelId }));
-      cb();
+      await dispatch(actions.deleteChannel({ channelId: id }));
+      resetForm();
       dispatch(actions.hideModal());
       dispatch(actions.setCurrentChannelId({ id: defaultChannelId }));
-    } catch (err) {
-      let message;
-      if (err.request) {
-        message = err.request.status === 0 ? 'network' : 'access';
-      } else {
-        message = 'add_channel';
-      }
-      dispatch(actions.errorMessageActions.setErrorMessage({ message }));
+    } catch (e) {
+      setStatus(t('network'));
     }
+    setSubmitting(false);
   };
 
   const formik = useFormik({
@@ -40,13 +35,15 @@ const ChannelAddModal = ({
       id,
     },
     validationSchema,
-    onSubmit: (_, { resetForm }) => {
-      deleteChannel({ channelId: id }, resetForm);
-    },
+    onSubmit: handleSubmit,
   });
 
   return (
     <Modal title={t('remove_channel_title')}>
+      <h6 className="text-danger">
+        {formik.status}
+        &nbsp;
+      </h6>
       <form onSubmit={formik.handleSubmit}>
         <button
           type="submit"
