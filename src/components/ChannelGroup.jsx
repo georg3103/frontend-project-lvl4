@@ -15,10 +15,9 @@ const ChannelGroup = () => {
     overflow: 'hidden',
   };
 
-  const onEnter = (e, id) => {
-    e.preventDefault();
+  const onEnter = (e, payload) => {
     if (e.keyCode === 13) {
-      dispatch(actions.showModal({ type: 'editModal', id }));
+      dispatch(actions.showModal(payload));
     }
   };
 
@@ -56,7 +55,7 @@ const ChannelGroup = () => {
                         tabIndex="0"
                         role="button"
                         onClick={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
-                        onKeyDown={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
+                        onKeyDown={(e) => onEnter(e, { type: 'deleteModal', id })}
                       >
                         {t('delete')}
                       </div>
@@ -65,7 +64,7 @@ const ChannelGroup = () => {
                         tabIndex="0"
                         role="button"
                         onClick={() => dispatch(actions.showModal({ type: 'editModal', id }))}
-                        onKeyDown={(e) => onEnter(e, id)}
+                        onKeyDown={(e) => onEnter(e, { type: 'editModal', id })}
                       >
                         {t('edit')}
                       </div>
