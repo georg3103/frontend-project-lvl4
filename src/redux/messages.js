@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../routes';
+import { actions as channelsActions } from './channels';
 
 const submitMessage = createAsyncThunk(
   'messages/submitMessage',
@@ -17,11 +18,11 @@ const messagesSlice = createSlice({
     addMessage(state, action) {
       state.push(action.payload.message);
     },
-    removeChannelMessages(state, action) {
-      return state.filter(({ channelId }) => channelId !== action.payload.channelId);
-    },
   },
   extraReducers: {
+    [channelsActions.removeChannel]: (state, action) => {
+      return state.filter(({ channelId }) => channelId !== action.payload.id);
+    },
     [submitMessage.fulfilled]: () => {},
     [submitMessage.rejected]: (err) => { throw new Error(err); },
   },

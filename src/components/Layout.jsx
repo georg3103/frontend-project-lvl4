@@ -48,7 +48,6 @@ const Layout = () => {
     socket.on('removeChannel', (data) => {
       const channel = get(data, 'data');
       dispatch(actions.removeChannel(channel));
-      dispatch(actions.removeChannelMessages({ channelId: channel.id }));
     });
 
     // TODO: how to abort socket? AbortController?
