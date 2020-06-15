@@ -20,9 +20,8 @@ const messagesSlice = createSlice({
     },
   },
   extraReducers: {
-    [channelsActions.removeChannel]: (state, action) => {
-      return state.filter(({ channelId }) => channelId !== action.payload.id);
-    },
+    [channelsActions.removeChannel]: (state, action) => state
+      .filter(({ channelId }) => channelId !== action.payload.id),
     [submitMessage.fulfilled]: () => {},
     [submitMessage.rejected]: (err) => { throw new Error(err); },
   },

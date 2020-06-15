@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { useFormik } from 'formik';
 import get from 'lodash/get';
 import { actions, getSelector } from '../redux';
@@ -73,27 +75,36 @@ const MessageForm = () => {
 
   return (
     <div role="presentation" onKeyDown={onKeyDown}>
-      <form
+      <div className="text-danger">
+        {formik.status}
+        &nbsp;
+      </div>
+      <Form
         onSubmit={formik.handleSubmit}
-        className="w-100 p-3 position-relative"
       >
-        <textarea
-          className="w-100"
-          id="message"
-          name="message"
-          type="text"
-          placeholder={t('message')}
-          style={textAreaStyle}
-          ref={inputElement}
-          onChange={formik.handleChange}
-          value={formik.values.message}
-          disabled={formik.isSubmitting}
-        />
-        <div className="text-danger">
-          {formik.status}
-          &nbsp;
-        </div>
-      </form>
+        <Form.Group className="d-flex align-self-center">
+          <textarea
+            className="w-100 mr-2"
+            id="message"
+            name="message"
+            type="text"
+            placeholder={t('message')}
+            style={textAreaStyle}
+            ref={inputElement}
+            onChange={formik.handleChange}
+            value={formik.values.message}
+            disabled={formik.isSubmitting}
+          />
+          <Button
+            className="ml-auto"
+            type="submit"
+            disabled={formik.isSubmitting}
+            variant="outline-success"
+          >
+            {t('send')}
+          </Button>
+        </Form.Group>
+      </Form>
     </div>
   );
 };

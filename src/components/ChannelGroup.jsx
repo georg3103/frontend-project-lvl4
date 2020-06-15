@@ -9,14 +9,8 @@ const ChannelGroup = () => {
   const { t } = useTranslation();
   const { channels, currentChannelId } = useSelector(getSelector('channels'));
 
-  const nameStyle = {
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-  };
-
   const onEnter = (e, payload) => {
-    if (e.keyCode === 13) {
+    if (e.key === 13) {
       dispatch(actions.showModal(payload));
     }
   };
@@ -43,7 +37,7 @@ const ChannelGroup = () => {
             >
               <div className="container">
                 <div className="row">
-                  <div className="col-sm text-left" style={nameStyle}>
+                  <div className="col-sm text-left text-truncate">
                     {'# '}
                     {name}
                   </div>

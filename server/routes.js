@@ -1,5 +1,3 @@
-// @ts-check
-
 import uniqueId from 'lodash/uniqueId';
 import moment from 'moment';
 

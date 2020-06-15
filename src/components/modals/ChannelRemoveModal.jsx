@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { useFormik } from 'formik';
 import { actions, getSelector } from '../../redux';
 import Modal from '../Modal';
@@ -44,14 +46,16 @@ const ChannelAddModal = ({
         {formik.status}
         &nbsp;
       </h6>
-      <form onSubmit={formik.handleSubmit}>
-        <button
+      <Form onSubmit={formik.handleSubmit}>
+        <Button
+          className="ml-auto"
           type="submit"
           disabled={formik.isSubmitting}
+          variant="outline-success"
         >
           {t('delete')}
-        </button>
-      </form>
+        </Button>
+      </Form>
     </Modal>
   );
 };
