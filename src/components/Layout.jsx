@@ -69,7 +69,7 @@ const Layout = () => {
           </div>
         </div>
       </div>
-      {renderModal(modalState)}
+      {modalState.isShown ? renderModal(modalState) : null}
     </div>
   );
 };

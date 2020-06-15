@@ -4,13 +4,14 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     type: null,
+    isShown: false,
   },
   reducers: {
     showModal(state, { payload }) {
-      return { ...payload };
+      return { ...state, ...payload, isShown: true };
     },
     hideModal(state) {
-      return { ...state, type: null };
+      return { ...state, isShown: false };
     },
   },
 });
