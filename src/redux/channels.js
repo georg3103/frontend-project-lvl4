@@ -31,18 +31,18 @@ const channelsSlice = createSlice({
     currentChannelId: null,
   },
   reducers: {
-    addChannel(state, action) {
-      state.channels.push(action.payload.channel);
+    addChannel(state, { payload: { channel } }) {
+      state.channels.push(channel);
     },
-    removeChannel(state, action) {
+    removeChannel(state, { payload: { id } }) {
       return {
         ...state,
-        channels: state.channels.filter((ch) => ch.id !== action.payload.id),
+        channels: state.channels.filter((ch) => ch.id !== id),
       };
     },
-    editChannel(state, action) {
-      const channel = find(state.channels, (ch) => ch.id === action.payload.channel.id);
-      channel.name = action.payload.channel.name;
+    editChannel(state, { payload: { id, name } }) {
+      const channel = find(state.channels, (ch) => ch.id === id);
+      channel.name = name;
     },
     setCurrentChannelId(state, { payload: { id } }) {
       return { ...state, currentChannelId: id };

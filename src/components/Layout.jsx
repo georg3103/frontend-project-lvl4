@@ -41,8 +41,8 @@ const Layout = () => {
     });
 
     socket.on('renameChannel', (data) => {
-      const channel = get(data, 'data.attributes');
-      dispatch(actions.editChannel({ channel }));
+      const { id, name } = get(data, 'data.attributes');
+      dispatch(actions.editChannel({ id, name }));
     });
 
     socket.on('removeChannel', (data) => {

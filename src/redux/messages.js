@@ -15,13 +15,13 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState: [],
   reducers: {
-    addMessage(state, action) {
-      state.push(action.payload.message);
+    addMessage(state, { payload: { message } }) {
+      state.push(message);
     },
   },
   extraReducers: {
-    [channelsActions.removeChannel]: (state, action) => state
-      .filter(({ channelId }) => channelId !== action.payload.id),
+    [channelsActions.removeChannel]: (state, { payload: { id } }) => state
+      .filter(({ channelId }) => channelId !== id),
     [submitMessage.fulfilled]: () => {},
     [submitMessage.rejected]: (err) => { throw new Error(err); },
   },
