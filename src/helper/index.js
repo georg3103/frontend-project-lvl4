@@ -2,30 +2,15 @@ import Cookies from 'js-cookie';
 import faker from 'faker';
 import socketClient from 'socket.io-client';
 
-const cookieProp = 'user';
-
-const setUser = () => {
-  const name = faker.name.findName();
-
-  Cookies.set(cookieProp, name);
-
-  return name;
-};
-
-export const getUser = () => {
-  const name = Cookies.get(cookieProp);
-
-  return name;
-};
-
-export const generateUser = () => {
-  const name = getUser();
-
-  if (name) return name;
-
-  const newName = setUser();
-
-  return newName;
+export const CookieBuilder = { // TODO: don't like the name
+  setUserName: (value) => {
+    Cookies.set('userName', value);
+  },
+  setFakeUserName: () => {
+    const name = faker.name.findName();
+    Cookies.set('userName', name);
+  },
+  getUserName: () => Cookies.get('userName'),
 };
 
 export const openSocket = () => socketClient(process.env.PORT);

@@ -10,7 +10,7 @@ import resources from './i18n';
 import App from './components/App';
 import rootReducer from './redux';
 import '../assets/application.scss';
-import { generateUser } from './helper';
+import { CookieBuilder } from './helper';
 import UserContext from './context';
 
 
@@ -27,7 +27,9 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const userName = generateUser();
+CookieBuilder.setFakeUserName();
+
+const userName = CookieBuilder.getUserName();
 
 const preloadedState = {
   channels: {
