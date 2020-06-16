@@ -1,18 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-unresolved
 import gon from 'gon';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { configureStore } from '@reduxjs/toolkit';
 import resources from './i18n';
-import App from './components/App';
 import rootReducer from './redux';
 import '../assets/application.scss';
 import { CookieBuilder } from './helper';
-import UserContext from './context';
-
+import app from './app';
 
 i18n.use(initReactI18next).init({
   resources,
@@ -29,8 +24,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 CookieBuilder.setFakeUserName();
 
-const userName = CookieBuilder.getUserName();
-
 const preloadedState = {
   channels: {
     channels: gon.channels,
@@ -44,11 +37,4 @@ const store = configureStore({
   preloadedState,
 });
 
-ReactDOM.render(
-  <Provider store={store}>
-    <UserContext.Provider value={userName}>
-      <App />
-    </UserContext.Provider>
-  </Provider>,
-  document.querySelector('#chat'),
-);
+app(store);

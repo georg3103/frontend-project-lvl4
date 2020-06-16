@@ -50,7 +50,9 @@ const ChannelAddModal = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, []);
+    return () => {
+    };
+  }, [channels]);
   return (
     <Modal title={t('add_channel_title')}>
       <h6 className="text-danger">
