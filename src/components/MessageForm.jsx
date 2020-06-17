@@ -82,7 +82,7 @@ const MessageForm = () => {
       <Form
         onSubmit={formik.handleSubmit}
       >
-        <Form.Group className="d-flex align-self-center">
+        <Form.Group className="d-flex align-self-center ml-2 mr-2">
           <textarea
             className="w-100 mr-2"
             id="message"
