@@ -9,32 +9,39 @@ import '../assets/application.scss';
 import { CookieBuilder } from './helper';
 import app from './app';
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: 'en',
-  keySeparator: false,
-  interpolation: {
-    escapeValue: false,
-  },
-});
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: 'en',
+    keySeparator: false,
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+  .then(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      localStorage.debug = 'chat:*';
+    }
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
+    CookieBuilder.setFakeUserName();
 
-CookieBuilder.setFakeUserName();
+    const preloadedState = {
+      channels: {
+        channels: gon.channels,
+        currentChannelId: gon.currentChannelId,
+      },
+      messages: gon.messages,
+    };
 
-const preloadedState = {
-  channels: {
-    channels: gon.channels,
-    currentChannelId: gon.currentChannelId,
-  },
-  messages: gon.messages,
-};
+    const store = configureStore({
+      reducer: rootReducer,
+      preloadedState,
+    });
 
-const store = configureStore({
-  reducer: rootReducer,
-  preloadedState,
-});
-
-app(store);
+    app(store);
+  })
+  .catch((err) => {
+    console.log('Error on init');
+    console.log(new Error(err));
+  });
