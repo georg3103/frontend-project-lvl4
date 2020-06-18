@@ -44,5 +44,5 @@ i18n
   })
   .catch((err) => {
     console.log('Error on init');
-    console.log(new Error(err));
+    console.log(err);
   });
