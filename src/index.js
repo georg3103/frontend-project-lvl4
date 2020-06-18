@@ -6,7 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import resources from './i18n';
 import rootReducer from './redux';
 import '../assets/application.scss';
-import { CookieBuilder } from './helper';
+import { setUserName, getFakeName } from './helpers';
 import app from './app';
 
 i18n
@@ -24,7 +24,8 @@ i18n
       localStorage.debug = 'chat:*';
     }
 
-    CookieBuilder.setFakeUserName();
+    const fakeName = getFakeName();
+    setUserName(fakeName);
 
     const preloadedState = {
       channels: {

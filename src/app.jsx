@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import get from 'lodash/get';
 import UserContext from './context';
-import { CookieBuilder, openSocket } from './helper';
+import { getUserName, openSocket } from './helpers';
 import { actions } from './redux';
 import App from './components/App';
 
 export default (store) => {
-  const username = CookieBuilder.getUserName();
+  const username = getUserName();
 
   const socket = openSocket();
 
