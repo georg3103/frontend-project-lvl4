@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getSelector } from '../redux';
 
-const Messages = () => {
+const MessagesBox = () => {
   const container = React.useRef(null);
   const { currentChannelId } = useSelector(getSelector('channels'));
   const messages = useSelector((state) => getSelector('messagesForChannel')(state, currentChannelId));
@@ -27,4 +27,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default MessagesBox;
