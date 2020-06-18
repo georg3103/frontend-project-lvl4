@@ -20,7 +20,6 @@ export default (store) => {
   socket.on('newChannel', (data) => {
     const channel = get(data, 'data.attributes');
     store.dispatch(actions.addChannel({ channel }));
-    store.dispatch(actions.setCurrentChannelId({ id: channel.id }));
   });
 
   socket.on('renameChannel', (data) => {
