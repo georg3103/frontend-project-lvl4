@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { actions, getSelector } from '../redux';
 
 const ChannelGroup = () => {
@@ -41,33 +43,29 @@ const ChannelGroup = () => {
                     {'# '}
                     {name}
                   </div>
-                  {
-                    removable && (
-                    <>
-                      <div
-                        className="col-sm"
-                        tabIndex="0"
-                        role="button"
-                        onClick={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
-                        onKeyDown={(e) => onEnter(e, { type: 'deleteModal', id })}
-                      >
-                        {t('delete')}
-                      </div>
-                      <div
-                        className="col-sm"
-                        tabIndex="0"
-                        role="button"
-                        onClick={() => dispatch(actions.showModal({ type: 'editModal', id }))}
-                        onKeyDown={(e) => onEnter(e, { type: 'editModal', id })}
-                      >
-                        {t('edit')}
-                      </div>
-                    </>
-                    )
-                  }
                 </div>
               </div>
             </button>
+            {
+              removable && (
+              <DropdownButton id="dropdown-basic-button" title={t('action')}>
+                <Dropdown.Item
+                  tabIndex="0"
+                  onClick={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
+                  onKeyDown={(e) => onEnter(e, { type: 'deleteModal', id })}
+                >
+                  {t('delete')}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  tabIndex="0"
+                  onClick={() => dispatch(actions.showModal({ type: 'editModal', id }))}
+                  onKeyDown={(e) => onEnter(e, { type: 'editModal', id })}
+                >
+                  {t('edit')}
+                </Dropdown.Item>
+              </DropdownButton>
+              )
+            }
           </div>
         );
       })}
