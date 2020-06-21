@@ -8,10 +8,11 @@ const modalSlice = createSlice({
   },
   reducers: {
     showModal(state, { payload }) {
-      return { ...state, ...payload, isShown: true };
+      state = { ...payload, isShown: true };
+      return state;
     },
     hideModal(state) {
-      return { ...state, isShown: false };
+      state.isShown = false;
     },
   },
 });

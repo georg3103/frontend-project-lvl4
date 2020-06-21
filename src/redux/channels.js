@@ -35,17 +35,14 @@ const channelsSlice = createSlice({
       state.channels.push(channel);
     },
     removeChannel(state, { payload: { id } }) {
-      return {
-        ...state,
-        channels: state.channels.filter((ch) => ch.id !== id),
-      };
+      state.channels = state.channels.filter((ch) => ch.id !== id);
     },
     editChannel(state, { payload: { id, name } }) {
       const channel = find(state.channels, (ch) => ch.id === id);
       channel.name = name;
     },
     setCurrentChannelId(state, { payload: { id } }) {
-      return { ...state, currentChannelId: id };
+      state.currentChannelId = id;
     },
   },
   extraReducers: {
