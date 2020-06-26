@@ -1,4 +1,3 @@
-
 import Cookies from 'js-cookie';
 import faker from 'faker';
 import socketClient from 'socket.io-client';

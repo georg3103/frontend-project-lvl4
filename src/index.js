@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import gon from 'gon';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -6,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import resources from './i18n';
 import rootReducer from './redux';
 import '../assets/application.scss';
-import { setUserName, getFakeName } from './helpers';
+import { getUserName, setUserName, getFakeName } from './helpers';
 import app from './app';
 
 i18n
@@ -24,8 +23,10 @@ i18n
       localStorage.debug = 'chat:*';
     }
 
-    const fakeName = getFakeName();
-    setUserName(fakeName);
+    if (!getUserName()) {
+      const fakeName = getFakeName();
+      setUserName(fakeName);
+    }
 
     const preloadedState = {
       channels: {
