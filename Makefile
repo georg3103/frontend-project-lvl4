@@ -10,7 +10,7 @@ start-frontend:
 	npx webpack-dev-server
 
 install-deps:
-	npm install
+	npm ci
 
 build:
 	rm -rf dist
@@ -24,9 +24,6 @@ test-coverage:
 
 lint:
 	npx eslint . --ext js,jsx
-
-publish:
-	npm publish
 
 deploy:
 	git push heroku
