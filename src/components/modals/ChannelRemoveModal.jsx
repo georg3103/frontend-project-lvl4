@@ -6,19 +6,19 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useFormik } from 'formik';
-import { actions, getSelector } from '../../redux';
+import { actions, selectors } from '../../redux';
 import Modal from '../Modal';
+
+const validationSchema = Yup.object({
+  id: Yup.number().required('Required'),
+});
 
 const ChannelAddModal = ({
   id,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const defaultChannelId = useSelector(getSelector('defaultChannelId'));
-
-  const validationSchema = Yup.object({
-    id: Yup.number().required('Required'),
-  });
+  const defaultChannelId = useSelector((state) => selectors.getDefaultChannelId(state));
 
   const handleSubmit = async (_, { resetForm, setStatus, setSubmitting }) => {
     try {

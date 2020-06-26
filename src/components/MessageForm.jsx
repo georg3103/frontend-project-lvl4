@@ -6,13 +6,17 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useFormik } from 'formik';
 import get from 'lodash/get';
-import { actions, getSelector } from '../redux';
+import { actions } from '../redux';
 import UserContext from '../context';
+
+const validationSchema = Yup.object({
+  message: Yup.string().matches(/\S/).required('Required'),
+});
 
 const MessageForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { currentChannelId } = useSelector(getSelector('channels'));
+  const { currentChannelId } = useSelector((state) => state.channels);
   const inputElement = React.useRef(null);
   const user = React.useContext(UserContext);
 
@@ -21,10 +25,6 @@ const MessageForm = () => {
       inputElement.current.focus();
     }
   }, []);
-
-  const validationSchema = Yup.object({
-    message: Yup.string().matches(/\S/).required('Required'),
-  });
 
   const handleSubmit = async ({ message }, { resetForm, setStatus, setSubmitting }) => {
     const data = {

@@ -5,13 +5,13 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { actions, getSelector } from '../../redux';
+import { actions } from '../../redux';
 import Modal from '../Modal';
 
 const ChannelAddModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { channels } = useSelector(getSelector('channels'));
+  const { channels } = useSelector((state) => state.channels);
   const channelsNames = channels.map(({ name }) => name);
 
   const validationSchema = Yup.object({
