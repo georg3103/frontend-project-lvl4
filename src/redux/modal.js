@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const modalSlice = createSlice({
@@ -8,19 +9,18 @@ const modalSlice = createSlice({
   },
   reducers: {
     showModal(state, { payload }) {
+      // modals can also use payload.id (remove, edit modals)
       state = { ...payload, isShown: true };
       return state;
     },
     hideModal(state) {
-      state.isShown = false;
+      // modals can also use payload.id (remove, edit modals)
+      state = { type: null, isShown: false };
+      return state;
     },
   },
 });
 
-export const actions = {
-  ...modalSlice.actions,
-};
-
-export const getModalState = (state) => state.modal;
+export const { actions } = modalSlice;
 
 export default modalSlice.reducer;

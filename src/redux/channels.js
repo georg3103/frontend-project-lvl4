@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import find from 'lodash/find';
 import axios from 'axios';
@@ -46,11 +47,8 @@ const channelsSlice = createSlice({
     },
   },
   extraReducers: {
-    [createChannel.fulfilled]: () => {},
     [createChannel.rejected]: (err) => { throw new Error(err); },
-    [renameChannel.fulfilled]: () => {},
     [renameChannel.rejected]: (err) => { throw new Error(err); },
-    [deleteChannel.fulfilled]: () => {},
     [deleteChannel.rejected]: (err) => { throw new Error(err); },
   },
 });
@@ -60,12 +58,6 @@ export const actions = {
   createChannel,
   renameChannel,
   deleteChannel,
-};
-
-export const getChannels = (state) => state.channels;
-export const getDefaultChannelId = (state) => {
-  const [{ id }] = state.channels.channels;
-  return id;
 };
 
 export default channelsSlice.reducer;

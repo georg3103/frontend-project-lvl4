@@ -10,7 +10,6 @@ const submitMessage = createAsyncThunk(
   },
 );
 
-
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: [],
@@ -22,16 +21,10 @@ const messagesSlice = createSlice({
   extraReducers: {
     [channelsActions.removeChannel]: (state, { payload: { id } }) => state
       .filter(({ channelId }) => channelId !== id),
-    [submitMessage.fulfilled]: () => {},
     [submitMessage.rejected]: (err) => { throw new Error(err); },
   },
 });
 
 export const actions = { ...messagesSlice.actions, submitMessage };
-
-export const getMessages = (state) => state.messages;
-
-export const getMessagesForChannel = (state, channelId) => state.messages
-  .filter((m) => m.channelId === channelId);
 
 export default messagesSlice.reducer;
