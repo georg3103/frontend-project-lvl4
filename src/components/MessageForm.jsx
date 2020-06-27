@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useFormik } from 'formik';
-import get from 'lodash/get';
 import { actions } from '../redux';
 import UserContext from '../context';
 
@@ -55,31 +54,22 @@ const MessageForm = () => {
     onSubmit: handleSubmit,
   });
 
-  const onKeyDown = (event) => {
-    const message = get(formik, 'values.message', '');
+  const onKeyDown = (evt) => {
+    evt.preventDefault();
 
-    if (
-      !message.length
-      || (event.keyCode !== 13)
-      || (event.keyCode === 13 && event.shiftKey)
-    ) return;
-
-    event.preventDefault();
+    if ((evt.key !== 'Enter') || (evt.key === 'Enter' && evt.shiftKey)) return;
 
     formik.handleSubmit();
   };
 
-  const textAreaStyle = {
-    resize: 'none',
-  };
-
   return (
-    <div role="presentation" onKeyDown={onKeyDown}>
+    <div role="presentation">
       <div className="text-danger">
         {formik.status}
         &nbsp;
       </div>
       <Form
+        onKeyDown={onKeyDown}
         onSubmit={formik.handleSubmit}
       >
         <Form.Group className="d-flex align-self-center ml-2 mr-2">
@@ -89,7 +79,7 @@ const MessageForm = () => {
             name="message"
             type="text"
             placeholder={t('message')}
-            style={textAreaStyle}
+            style={{ resize: 'none' }}
             ref={inputElement}
             onChange={formik.handleChange}
             value={formik.values.message}
