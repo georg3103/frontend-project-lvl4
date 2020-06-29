@@ -46,11 +46,6 @@ const channelsSlice = createSlice({
       state.currentChannelId = id;
     },
   },
-  extraReducers: {
-    [createChannel.rejected]: (err) => { throw new Error(err); },
-    [renameChannel.rejected]: (err) => { throw new Error(err); },
-    [deleteChannel.rejected]: (err) => { throw new Error(err); },
-  },
 });
 
 export const actions = {

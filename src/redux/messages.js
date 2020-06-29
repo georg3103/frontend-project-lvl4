@@ -21,7 +21,6 @@ const messagesSlice = createSlice({
   extraReducers: {
     [channelsActions.removeChannel]: (state, { payload: { id } }) => state
       .filter(({ channelId }) => channelId !== id),
-    [submitMessage.rejected]: (err) => { throw new Error(err); },
   },
 });
 
