@@ -19,7 +19,6 @@ export default {
       add_channel_title: 'Add channel',
       edit_channel_title: 'Edit channel',
       remove_channel_title: 'Remove channel',
-      errorBoundary: 'An error has been catched:',
       action: 'action',
     },
   },

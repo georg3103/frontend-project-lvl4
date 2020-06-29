@@ -42,8 +42,10 @@ i18n
     });
 
     app(store);
+  }, (err) => {
+    console.log('crashed on i18n init:');
+    throw new Error(err);
   })
   .catch((err) => {
-    console.log('Error on init');
-    console.log(err);
+    console.log(err.message);
   });
