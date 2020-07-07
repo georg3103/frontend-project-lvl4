@@ -1,16 +1,17 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ChannelAddModal from './ChannelAddModal';
 import ChannelEditModal from './ChannelEditModal';
 import ChannelRemoveModal from './ChannelRemoveModal';
 
 const modalMapper = {
-  addModal: () => React.createElement(ChannelAddModal),
-  editModal: (id) => React.createElement(ChannelEditModal, { id }),
-  deleteModal: (id) => React.createElement(ChannelRemoveModal, { id }),
+  addModal: () => <ChannelAddModal />,
+  editModal: (modalData) => <ChannelEditModal id={modalData.id} />,
+  deleteModal: (modalData) => <ChannelRemoveModal id={modalData.id} />,
 };
 
-export default ({ type, id }) => {
+export default ({ type, data }) => {
   if (!modalMapper[type]) return null;
-  const Component = modalMapper[type](id);
+  const Component = modalMapper[type](data);
   return Component;
 };

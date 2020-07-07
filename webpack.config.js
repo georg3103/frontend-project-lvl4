@@ -1,10 +1,9 @@
-const isProduction = process.env.NODE_ENV === 'production';
-console.log('isProduction', isProduction);
+const path = require('path');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   entry: [
-    `${__dirname}/src/index.js`,
+    path.join(__dirname, 'src', 'index.js'),
   ],
   devtool: 'source-map',
   externals: {
@@ -14,7 +13,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   output: {
-    path: `${__dirname}/dist/public`,
+    path: path.join(__dirname, 'dist', 'public'),
     publicPath: '/assets/',
   },
   plugins: [],

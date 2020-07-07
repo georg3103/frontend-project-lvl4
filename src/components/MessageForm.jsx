@@ -55,7 +55,7 @@ const MessageForm = () => {
   });
 
   const onKeyDown = (evt) => {
-    evt.preventDefault();
+    evt.stopPropagation();
 
     if ((evt.key !== 'Enter') || (evt.key === 'Enter' && evt.shiftKey)) return;
 
@@ -69,7 +69,6 @@ const MessageForm = () => {
         &nbsp;
       </div>
       <Form
-        onKeyDown={onKeyDown}
         onSubmit={formik.handleSubmit}
       >
         <Form.Group className="d-flex align-self-center ml-2 mr-2">
@@ -82,6 +81,7 @@ const MessageForm = () => {
             style={{ resize: 'none' }}
             ref={inputElement}
             onChange={formik.handleChange}
+            onKeyDown={onKeyDown}
             value={formik.values.message}
             disabled={formik.isSubmitting}
           />

@@ -25,7 +25,7 @@ const getMessagesForChannel = createSelector(
 );
 
 const getDefaultChannelId = createSelector(
-  (state) => state.channels.channels,
+  (state) => state.channels.list,
   (channels) => {
     const [{ id }] = channels;
     return id;

@@ -13,12 +13,12 @@ const validationSchema = Yup.object({
   id: Yup.number().required('Required'),
 });
 
-const ChannelAddModal = ({
+const ChannelRemoveModal = ({
   id,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const defaultChannelId = useSelector((state) => selectors.getDefaultChannelId(state));
+  const defaultChannelId = useSelector(selectors.getDefaultChannelId);
 
   const handleSubmit = async (_, { resetForm, setStatus, setSubmitting }) => {
     try {
@@ -60,8 +60,8 @@ const ChannelAddModal = ({
   );
 };
 
-ChannelAddModal.propTypes = {
+ChannelRemoveModal.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-export default ChannelAddModal;
+export default ChannelRemoveModal;

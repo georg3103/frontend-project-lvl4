@@ -28,18 +28,18 @@ const deleteChannel = createAsyncThunk(
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: {
-    channels: [],
+    list: [],
     currentChannelId: null,
   },
   reducers: {
     addChannel(state, { payload: { channel } }) {
-      state.channels.push(channel);
+      state.list.push(channel);
     },
     removeChannel(state, { payload: { id } }) {
-      state.channels = state.channels.filter((ch) => ch.id !== id);
+      state.list = state.list.filter((ch) => ch.id !== id);
     },
     editChannel(state, { payload: { id, name } }) {
-      const channel = find(state.channels, (ch) => ch.id === id);
+      const channel = find(state.list, (ch) => ch.id === id);
       channel.name = name;
     },
     setCurrentChannelId(state, { payload: { id } }) {

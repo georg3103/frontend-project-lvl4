@@ -5,17 +5,16 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     type: null,
+    data: {},
     isShown: false,
   },
   reducers: {
-    showModal(state, { payload }) {
-      // modals can also use payload.id (remove, edit modals)
-      state = { ...payload, isShown: true };
+    showModal(state, { payload: { type, data } }) {
+      state = { type, data, isShown: true };
       return state;
     },
     hideModal(state) {
-      // modals can also use payload.id (remove, edit modals)
-      state = { type: null, isShown: false };
+      state = { type: null, data: {}, isShown: false };
       return state;
     },
   },

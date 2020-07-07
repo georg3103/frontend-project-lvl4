@@ -9,7 +9,7 @@ import { actions } from '../redux';
 const ChannelsBox = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { channels, currentChannelId } = useSelector((state) => state.channels);
+  const { list: channels, currentChannelId } = useSelector((state) => state.channels);
 
   const onEnter = (e, payload) => {
     if (e.key === 'Enter') {
@@ -45,13 +45,13 @@ const ChannelsBox = () => {
               <Dropdown.Toggle variant={variant} id="dropdown-split-basic" />
               <Dropdown.Menu>
                 <Dropdown.Item
-                  onClick={() => dispatch(actions.showModal({ type: 'deleteModal', id }))}
+                  onClick={() => dispatch(actions.showModal({ type: 'deleteModal', data: { id } }))}
                   onKeyDown={(e) => onEnter(e, { type: 'deleteModal', id })}
                 >
                   {t('delete')}
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={() => dispatch(actions.showModal({ type: 'editModal', id }))}
+                  onClick={() => dispatch(actions.showModal({ type: 'editModal', data: { id } }))}
                   onKeyDown={(e) => onEnter(e, { type: 'editModal', id })}
                 >
                   {t('edit')}

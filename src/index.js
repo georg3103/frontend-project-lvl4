@@ -18,19 +18,23 @@ i18n
       escapeValue: false,
     },
   })
+  .catch((err) => {
+    console.log('crashed on i18n init:');
+    throw new Error(err);
+  })
   .then(() => {
     if (process.env.NODE_ENV !== 'production') {
       localStorage.debug = 'chat:*';
     }
 
     if (!getUserName()) {
-      const fakeName = getFakeName();
-      setUserName(fakeName);
+      const userName = getFakeName();
+      setUserName(userName);
     }
 
     const preloadedState = {
       channels: {
-        channels: gon.channels,
+        list: gon.channels,
         currentChannelId: gon.currentChannelId,
       },
       messages: gon.messages,
@@ -42,9 +46,6 @@ i18n
     });
 
     app(store);
-  }, (err) => {
-    console.log('crashed on i18n init:');
-    throw new Error(err);
   })
   .catch((err) => {
     console.log(err.message);

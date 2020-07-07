@@ -11,7 +11,7 @@ import Modal from '../Modal';
 const ChannelAddModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { channels } = useSelector((state) => state.channels);
+  const { list: channels } = useSelector((state) => state.channels);
   const channelsNames = channels.map(({ name }) => name);
 
   const validationSchema = Yup.object({
