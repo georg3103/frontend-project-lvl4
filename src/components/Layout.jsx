@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import ChannelsBox from './ChannelsBox';
 import MessagesBox from './MessagesBox';
 import MessageForm from './MessageForm';
-import renderModal from './modals';
+import renderModal from './modals/index';
 
 const Layout = () => {
   const modalState = useSelector((state) => state.modal);
